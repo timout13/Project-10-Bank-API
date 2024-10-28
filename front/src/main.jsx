@@ -10,11 +10,16 @@ import {
 import Home from "./pages/Home";
 import Header from "./components/header/index.jsx";
 import Footer from "./components/footer/index.jsx";
+import SignIn from "./pages/SignIn/index.jsx";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Home />,
+    },
+    {
+        path: "/login",
+        element: <SignIn />,
     },
 ]);
 
