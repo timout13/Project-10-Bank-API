@@ -11,6 +11,7 @@ import Home from "./pages/Home";
 import Header from "./components/header/index.jsx";
 import Footer from "./components/footer/index.jsx";
 import SignIn from "./pages/SignIn/index.jsx";
+import Profile from "./pages/Profile/index.jsx";
 
 const router = createBrowserRouter([
     {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
     {
         path: "/login",
         element: <SignIn />,
+    },
+    {
+        path: "/profile",
+        element: <Profile />,
     },
 ]);
 
