@@ -89,6 +89,52 @@ body,#root {
     margin: 0 auto;
 }
 
+/* Formulaire */
+.form {
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: 15px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* Groupe des champs de saisie */
+.input-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.input-group input[type="text"]:first-of-type {
+    justify-self: end;
+}
+/* Champs de saisie */
+input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #cbd2dc;
+    border-radius: 5px;
+    color: #333;
+    background-color: #fff;
+    width: 300px;
+}
+
+/* Groupe des boutons */
+.btn-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+.btn-group .btn:first-of-type {
+    justify-self: end;
+}
+.btn-group .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 200px;
+}
+
 .hero-content .subtitle {
     font-weight: bold;
     font-size: 1rem;

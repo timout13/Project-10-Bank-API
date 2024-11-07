@@ -28,11 +28,15 @@ function Profile() {
                 <h1>Welcome back<br/>{name.firstname} {name.lastname} !</h1>
                 {isEdit ?
                     <>
-                        <form onSubmit={handleName}>
-                            <input type="text" name="firstname" ref={firstnameRef} defaultValue={name.firstname}/>
-                            <input type="text" name="lastname" ref={lastnameRef} defaultValue={name.lastname}/>
-                            <button type="submit" className="edit-button">Save</button>
-                            <button type="button" className="edit-button" onClick={handleEditState}>Cancel</button>
+                        <form className="form" onSubmit={handleName}>
+                            <div className="input-group">
+                                <input type="text" name="firstname" ref={firstnameRef} defaultValue={name.firstname}/>
+                                <input type="text" name="lastname" ref={lastnameRef} defaultValue={name.lastname}/>
+                            </div>
+                            <div className="btn-group">
+                                <button type="submit" className="btn edit-button">Save</button>
+                                <button type="button" className="btn edit-button" onClick={handleEditState}>Cancel</button>
+                            </div>
                         </form>
                     </> :
                     <button className="edit-button" onClick={handleEditState}>Edit Name</button>
