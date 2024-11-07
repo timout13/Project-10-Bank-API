@@ -1,11 +1,42 @@
+import {useRef, useState} from "react";
 
 
 function Profile() {
+    // [] Adapter à la slice de userSLice
+    const [isEdit, setIsEdit] = useState(false);
+    const [name, setName] = useState({firstname:'Tony',lastname:'Jarvis'});
+    const firstnameRef = useRef(null);
+    const lastnameRef = useRef(null);
+
+    const handleEditState=(e)=>{
+        e.preventDefault();
+        setIsEdit(prevState => !prevState);
+    }
+    const handleName = (e) => {
+        e.preventDefault();
+
+        const newFirstname = firstnameRef.current.value;
+        const newLastname = lastnameRef.current.value;
+
+        setName({ firstname: newFirstname, lastname: newLastname });
+        setIsEdit(false);
+    };
+
     return (
         <main className="main bg-dark">
             <div className="header">
-                <h1>Welcome back<br/>Tony Jarvis!</h1>
-                <button className="edit-button">Edit Name</button>
+                <h1>Welcome back<br/>{name.firstname} {name.lastname} !</h1>
+                {isEdit ?
+                    <>
+                        <form onSubmit={handleName}>
+                            <input type="text" name="firstname" ref={firstnameRef} defaultValue={name.firstname}/>
+                            <input type="text" name="lastname" ref={lastnameRef} defaultValue={name.lastname}/>
+                            <button type="submit" className="edit-button">Save</button>
+                            <button type="button" className="edit-button" onClick={handleEditState}>Cancel</button>
+                        </form>
+                    </> :
+                    <button className="edit-button" onClick={handleEditState}>Edit Name</button>
+                }
             </div>
             <h2 className="sr-only">Accounts</h2>
             <section className="account">
