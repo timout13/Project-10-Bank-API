@@ -1,5 +1,8 @@
 import logo from "../../assets/img/argentBankLogo.png";
+
 function Header() {
+    // [] Ajouter un espace entre l'icone et 'login'
+    // [] Changer entre connexion et déconnexion en f() de la session
     return (
         <>
             <nav className="main-nav">
