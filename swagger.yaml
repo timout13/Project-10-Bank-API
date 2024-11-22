@@ -74,7 +74,7 @@ paths:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: User profile retrieved successfully
           schema:
             $ref: '#/definitions/ApiResponse'
         '400':
@@ -103,9 +103,92 @@ paths:
         - application/json
       responses:
         '200':
-          description: User profile retrieved successully
+          description: User profile retrieved successfully
           schema:
             $ref: '#/definitions/ApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/account:
+    post:
+      security:
+        - Bearer: [ ]
+      tags:
+        - User Account management
+      summary: User Account List
+      description: API for fetching user accounts
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Accounts retrieved successfully
+          schema:
+            $ref: '#/definitions/AccountApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/account/transactions:
+    post:
+      security:
+        - Bearer: [ ]
+      tags:
+        - User Account management
+      summary: Account Transactions
+      description: API for fetching a user account transactions.
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+        - in: body
+          name: body
+          description: Account list payload
+          required: true
+          schema:
+            $ref: '#/definitions/AccountTransactions'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Account transactions retrieved successfully
+          schema:
+            $ref: '#/definitions/AccountApiResponse'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+    put:
+      security:
+        - Bearer: [ ]
+      tags:
+        - User Account management
+      summary: Update Account Transaction
+      description: API for updating a user transaction
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+        - in: body
+          name: body
+          description: Update account transaction attributes
+          required: true
+          schema:
+            $ref: '#/definitions/AccountUpdateTransactions'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Account transaction updated successfully
+          schema:
+            $ref: '#/definitions/AccountApiResponse'
         '400':
           description: Invalid Fields
         '500':
@@ -164,3 +247,28 @@ definitions:
         type: string
       lastName:
         type: string
+  AccountApiResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      body:
+        type: object
+  AccountTransactions:
+    properties:
+      idAccount:
+        type: id
+        description: Account ID
+  AccountUpdateTransactions:
+    properties:
+      idTransaction:
+        type: id
+        description: Transaction ID
+      category:
+        type: id
+        description: The category type of the transaction
+      note:
+        type: string
+        description: The notes to link to the transaction
