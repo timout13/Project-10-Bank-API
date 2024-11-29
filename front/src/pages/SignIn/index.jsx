@@ -2,8 +2,13 @@ import icon_chat from "../../assets/img/icon-chat.png";
 import icon_money from "../../assets/img/icon-money.png";
 import icon_security from "../../assets/img/icon-security.png";
 import {useState} from "react";
-
+import { useDispatch, useSelector } from 'react-redux';
+import { login, fetchUserProfile } from '../../redux/slices/authSlice';
+import {useNavigate} from "react-router-dom";
 function SignIn() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { loading, error, token, user } = useSelector((state) => state.auth);
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -23,10 +28,19 @@ function SignIn() {
             [name]: checked,
         });
     };
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        alert(`Données du formulaire:\n${JSON.stringify(formData, null, 2)}`);
-        //fetch();
+        const credentials = {
+            email: formData.email,
+            password: formData.password,
+        }
+        const resultAction = await dispatch(login(credentials));
+
+        if (login.fulfilled.match(resultAction)) {
+            // Success => get user data
+            navigate('/profile');
+            // ? Redirection vers /profile
+        }
     };
     return (
         <main className="main bg-dark">
