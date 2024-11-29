@@ -2,10 +2,11 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const API_URL = 'http://localhost:3001/api/v1';
 const initialState = {
-    token: localStorage.getItem('token') || null,
+    token: localStorage.getItem('token') || sessionStorage.getItem('token') || null,
     user: null,
     loading: false,
     error: null,
+    rememberMe:false,
 };
 
 // For token
@@ -94,9 +95,13 @@ const authSlice = createSlice({
         logout: (state) => {
             state.token = null;
             state.user = null;
-            localStorage.removeItem('token');
+            localStorage.removeItem("token");
+            sessionStorage.removeItem("token");
             window.location.pathname = '/login';
         },
+        setRememberMe:(state,action)=>{
+            state.rememberMe = action.payload;
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -107,7 +112,11 @@ const authSlice = createSlice({
             .addCase(login.fulfilled, (state, action) => {
                 state.loading = false;
                 state.token = action.payload;
-                localStorage.setItem('token', action.payload);
+                if(state.rememberMe){
+                    sessionStorage.setItem('token', action.payload);
+                } else{
+                    localStorage.setItem('token', action.payload);
+                }
             })
             .addCase(login.rejected, (state, action) => {
                 state.loading = false;
@@ -131,6 +140,6 @@ const authSlice = createSlice({
     },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, setRememberMe } = authSlice.actions;
 
 export default authSlice.reducer;
