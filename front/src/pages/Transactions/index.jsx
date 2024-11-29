@@ -11,10 +11,10 @@ function Transactions() {
     }
     return (
         <main className="main bg-dark">
-            <section className="header">
-                <p>Label</p>
-                <p>Money</p>
-                <p>Available Balance</p>
+            <section className="content-header">
+                <p className="bankName">Label</p>
+                <p className="money">Money</p>
+                <p className="available">Available Balance</p>
             </section>
             <section className="content">
                 <div className="table">
