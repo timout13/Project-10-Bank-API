@@ -1,37 +1,58 @@
-import {useRef, useState} from "react";
-
-
+import {useEffect, useRef, useState} from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import {login, fetchUserProfile, updateUserProfile} from '../../redux/slices/authSlice';
+import {useNavigate} from "react-router-dom";
 function Profile() {
-    // [] Adapter à la slice de userSLice
     const [isEdit, setIsEdit] = useState(false);
-    const [name, setName] = useState({firstname:'Tony',lastname:'Jarvis'});
     const firstnameRef = useRef(null);
     const lastnameRef = useRef(null);
-
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const user = useSelector(state=> state.auth.user);
+    const loading = useSelector((state) => state.auth.loading);
+    const error = useSelector((state) => state.auth.error);
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                // Tenter de récupérer le profil utilisateur
+                await dispatch(fetchUserProfile()); // Gère directement success/erreur
+            } catch (error) {
+                console.error('Erreur lors de la récupération du profil :', error);
+                navigate('/login'); // Redirige en cas d'erreur
+            }
+        };
+        fetchProfile();
+    }, [, dispatch]);
+    //console.log(loading);
+    //console.log(user);
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+        const newFirstname = firstnameRef.current.value;
+        const newLastname = lastnameRef.current.value;
+        const name = { firstName: newFirstname, lastName: newLastname };
+        try {
+            await dispatch(updateUserProfile(name)).unwrap();
+            setIsEdit(false);
+        } catch (err) {
+           console.log(err);
+        }
+    };
     const handleEditState=(e)=>{
         e.preventDefault();
         setIsEdit(prevState => !prevState);
     }
-    const handleName = (e) => {
-        e.preventDefault();
-
-        const newFirstname = firstnameRef.current.value;
-        const newLastname = lastnameRef.current.value;
-
-        setName({ firstname: newFirstname, lastname: newLastname });
-        setIsEdit(false);
-    };
 
     return (
         <main className="main bg-dark">
             <div className="header">
-                <h1>Welcome back<br/>{name.firstname} {name.lastname} !</h1>
+                {user && <h1>Welcome back<br/>{user.firstName} {user.lastName} !</h1>}
+                {!user && <h1>Welcome back</h1>}
                 {isEdit ?
                     <>
-                        <form className="form" onSubmit={handleName}>
+                        <form className="form" onSubmit={handleUpdate}>
                             <div className="input-group">
-                                <input type="text" name="firstname" ref={firstnameRef} defaultValue={name.firstname}/>
-                                <input type="text" name="lastname" ref={lastnameRef} defaultValue={name.lastname}/>
+                                <input type="text" name="firstname" ref={firstnameRef} defaultValue={user?.firstName ? user.firstName : ''} />
+                                <input type="text" name="lastname" ref={lastnameRef} defaultValue={user?.lastName ? user.lastName : ''}/>
                             </div>
                             <div className="btn-group">
                                 <button type="submit" className="btn edit-button">Save</button>
