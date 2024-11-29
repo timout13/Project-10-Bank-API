@@ -7,8 +7,7 @@ const initialState = {
     loading: false,
     error: null,
 };
-// Connexion je récupère le token redirection vers profile
-// Sur profile => réupération du token, réucpération des données user, envoie des données user vers store, récupération des données store vers UI
+
 // For token
 export const login = createAsyncThunk('auth/login', async (credentials, { rejectWithValue }) => {
     try {
@@ -36,8 +35,9 @@ export const fetchUserProfile = createAsyncThunk('auth/fetchUserProfile', async 
         const state = getState();
         const token = state.auth.token;
 
-        if (!token && window.location.pathname !=='/login') {
-            window.location ='/login'; // Redirige si aucun token
+        if (!token) {
+            if(window.location.pathname !=='/login')
+                window.location ='/login'; // Redirige si aucun token
             return;
         }
         const response = await fetch(`${API_URL}/user/profile`, {
