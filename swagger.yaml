@@ -123,19 +123,22 @@ paths:
           name: Authorization
           description: Attach Bearer JWT token
           required: true
+          type: string
       produces:
         - application/json
       responses:
         '200':
           description: Accounts retrieved successfully
           schema:
-            $ref: '#/definitions/AccountApiResponse'
-        '400':
-          description: Invalid Fields
+            type: array
+            items:
+              $ref: '#/definitions/AccountApiResponse'
+        '401':
+          description: The token is invalid.
         '500':
           description: Internal Server Error
-  /user/account/transactions:
-    post:
+  /user/account/{idAccount}/transactions:
+    get:
       security:
         - Bearer: [ ]
       tags:
@@ -147,24 +150,33 @@ paths:
           name: Authorization
           description: Attach Bearer JWT token
           required: true
-        - in: body
-          name: body
-          description: Account list payload
+          type: string
+        - name: idAccount
+          in: path
+          description: User ID
+          type: integer
           required: true
-          schema:
-            $ref: '#/definitions/AccountTransactions'
       produces:
         - application/json
       responses:
         '200':
           description: Account transactions retrieved successfully
           schema:
-            $ref: '#/definitions/AccountApiResponse'
+            type: array
+            items:
+              $ref: '#/definitions/AccountTransactionResponse'
         '400':
           description: Invalid Fields
+        '401':
+          description: The token is invalid.
+        '403':
+          description: Unauthorized....
+        404:
+          description: An account with the specified ID was not found.
         '500':
           description: Internal Server Error
-    put:
+  /user/transactions/{idTransaction}:
+    patch:
       security:
         - Bearer: [ ]
       tags:
@@ -175,6 +187,12 @@ paths:
         - in: header
           name: Authorization
           description: Attach Bearer JWT token
+          required: true
+          type: string
+        - name: idTransaction
+          in: path
+          description: Transaction ID
+          type: integer
           required: true
         - in: body
           name: body
@@ -188,9 +206,13 @@ paths:
         '200':
           description: Account transaction updated successfully
           schema:
-            $ref: '#/definitions/AccountApiResponse'
+            $ref: '#/definitions/AccountUpdateTransactionsResponse'
         '400':
           description: Invalid Fields
+        '401':
+          description: The token is invalid.
+        404:
+          description: A transaction with the specified ID was not found.
         '500':
           description: Internal Server Error
 securityDefinitions:
@@ -250,25 +272,57 @@ definitions:
   AccountApiResponse:
     type: object
     properties:
-      status:
-        type: integer
-      message:
-        type: string
-      body:
-        type: object
-  AccountTransactions:
-    properties:
       idAccount:
-        type: id
-        description: Account ID
-  AccountUpdateTransactions:
+        type: integer
+      description:
+        type: string
+      label:
+        type: string
+      balance:
+        type: number
+  AccountTransactionResponse:
+    type: object
     properties:
       idTransaction:
-        type: id
-        description: Transaction ID
+        type: integer
+      category:
+        type: integer
+      transactionType:
+        type: integer
+      note:
+        type: string
+      date:
+        type: string
+      amount:
+        type: number
+      balance:
+        type: number
+      description:
+        type: string
+  AccountUpdateTransactions:
+    properties:
       category:
         type: id
         description: The category type of the transaction
       note:
         type: string
         description: The notes to link to the transaction
+  AccountUpdateTransactionsResponse:
+    type: object
+    properties:
+      idTransaction:
+        type: integer
+      category:
+        type: integer
+      transactionType:
+        type: integer
+      note:
+        type: string
+      date:
+        type: string
+      amount:
+        type: number
+      balance:
+        type: number
+      description:
+        type: string
