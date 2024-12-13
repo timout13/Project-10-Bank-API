@@ -135,6 +135,8 @@ paths:
               $ref: '#/definitions/AccountApiResponse'
         '401':
           description: The token is invalid.
+        '403':
+          description: Unauthorized access for this role
         '500':
           description: Internal Server Error
   /user/account/{idAccount}/transactions:
@@ -165,12 +167,10 @@ paths:
             type: array
             items:
               $ref: '#/definitions/AccountTransactionResponse'
-        '400':
-          description: Invalid Fields
         '401':
           description: The token is invalid.
         '403':
-          description: Unauthorized....
+          description: Unauthorized access for this role
         404:
           description: An account with the specified ID was not found.
         '500':
@@ -207,10 +207,10 @@ paths:
           description: Account transaction updated successfully
           schema:
             $ref: '#/definitions/AccountUpdateTransactionsResponse'
-        '400':
-          description: Invalid Fields
         '401':
           description: The token is invalid.
+        '403':
+          description: Unauthorized access for this role
         404:
           description: A transaction with the specified ID was not found.
         '500':
