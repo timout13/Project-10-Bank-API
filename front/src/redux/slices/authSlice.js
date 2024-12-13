@@ -37,8 +37,8 @@ export const fetchUserProfile = createAsyncThunk('auth/fetchUserProfile', async 
         const token = state.auth.token;
 
         if (!token) {
-            if(window.location.pathname !=='/login')
-                window.location ='/login'; // Redirige si aucun token
+            if(window.location.pathname =='/profile')
+                window.location ='/login';
             return;
         }
         const response = await fetch(`${API_URL}/user/profile`, {
@@ -50,6 +50,11 @@ export const fetchUserProfile = createAsyncThunk('auth/fetchUserProfile', async 
         });
 
         if (!response.ok) {
+            if(response.status === 401 && window.location.pathname == '/profile'){
+                window.location = '/login';
+                localStorage.removeItem('token');
+                sessionStorage.removeItem('token');
+            }
             const errorData = await response.json();
             throw new Error(errorData.message || 'Une erreur est survenue');
         }
@@ -113,9 +118,9 @@ const authSlice = createSlice({
                 state.loading = false;
                 state.token = action.payload;
                 if(state.rememberMe){
-                    sessionStorage.setItem('token', action.payload);
-                } else{
                     localStorage.setItem('token', action.payload);
+                } else{
+                    sessionStorage.setItem('token', action.payload);
                 }
             })
             .addCase(login.rejected, (state, action) => {

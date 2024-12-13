@@ -4,10 +4,9 @@ import {fetchUserProfile, logout} from "../../redux/slices/authSlice.js";
 import {useEffect} from "react";
 
 function Header() {
-    // [] Ajouter un espace entre l'icone et 'login'
-    // [] Changer entre connexion et déconnexion en f() de la session
     const dispatch = useDispatch();
     const user = useSelector(state=> state.auth.user);
+    const location = window.location.pathname;
     useEffect(() => {
         const fetchProfile = async () => {
             try {
@@ -36,10 +35,22 @@ function Header() {
                         <i className="fa fa-user-circle"></i>
                         Sign In
                     </a>}
-                    {user && <button className="main-nav-item" onClick={()=>dispatch(logout())}>
+                    {user && location !== '/profile' && <button className="main-nav-item" onClick={()=>dispatch(logout())}>
                         <i className="fa fa-user-circle"></i>
                         Sign out
                     </button>}
+                    {user && location === '/profile' &&
+                        <>
+                            <button className="main-nav-item">
+                                <i className="fa fa-user-circle"></i>
+                                {user.firstName}
+                            </button>
+                            <button className="main-nav-item" onClick={() => dispatch(logout())}>
+                                <i className="fa fa-sign-out"></i>
+                                Sign out
+                            </button>
+                        </>
+                    }
                 </div>
             </nav>
         </>

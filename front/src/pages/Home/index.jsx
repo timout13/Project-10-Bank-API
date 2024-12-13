@@ -1,26 +1,9 @@
 import icon_chat from "../../assets/img/icon-chat.png";
 import icon_money from "../../assets/img/icon-money.png";
 import icon_security from "../../assets/img/icon-security.png";
-import { useSelector, useDispatch } from 'react-redux';
-import { decrement, increment } from '../../redux/slices/counterSlice';
 function Home() {
-    const count = useSelector(state => state.counter.value);
-    const dispatch = useDispatch();
     return (
         <main>
-            <button
-                aria-label="Increment value"
-                onClick={() => dispatch(increment())}
-            >
-                Increment
-            </button>
-            <span>{count}</span>
-            <button
-                aria-label="Decrement value"
-                onClick={() => dispatch(decrement())}
-            >
-                Decrement
-            </button>
             <div className="hero">
                 <section className="hero-content">
                     <h2 className="sr-only">Promoted Content</h2>

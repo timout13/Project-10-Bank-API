@@ -48,7 +48,7 @@ function ProfileHeader() {
                 {!user && <h1>Welcome back</h1>}
                 {isEdit ?
                     <>
-                        <form className="form" onSubmit={handleUpdate}>
+                        <form className="form form--profile" onSubmit={handleUpdate}>
                             <div className="input-group">
                                 <input type="text" name="firstname" ref={firstnameRef} defaultValue={user?.firstName ? user.firstName : ''} />
                                 <input type="text" name="lastname" ref={lastnameRef} defaultValue={user?.lastName ? user.lastName : ''}/>

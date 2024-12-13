@@ -14,7 +14,6 @@ import Header from "./components/header/index.jsx";
 import Footer from "./components/footer/index.jsx";
 import SignIn from "./pages/SignIn/index.jsx";
 import Profile from "./pages/Profile/index.jsx";
-import Transactions from "./pages/Transactions/index.jsx";
 
 const router = createBrowserRouter([
     {
@@ -28,10 +27,6 @@ const router = createBrowserRouter([
     {
         path: "/profile",
         element: <Profile />,
-    },
-    {
-        path: "/transactions",
-        element: <Transactions />,
     },
 ]);
 

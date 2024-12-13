@@ -9,7 +9,7 @@ function SignIn() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        email: '',
+        username: '',
         password: '',
         rememberMe: false,
     });
@@ -31,7 +31,7 @@ function SignIn() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const credentials = {
-            email: formData.email,
+            email: formData.username,
             password: formData.password,
         }
         const resultAction = await dispatch(login(credentials));
@@ -47,8 +47,8 @@ function SignIn() {
                 <h1>Sign In</h1>
                 <form onSubmit={handleSubmit}>
                     <div className="input-wrapper">
-                        <label htmlFor="email">Email</label>
-                        <input type="text" value={formData.email} onChange={handleChangeTxt} name="email" id="email"/>
+                        <label htmlFor="username">Username</label>
+                        <input type="text" value={formData.username} onChange={handleChangeTxt} name="username" id="username"/>
                     </div>
                     <div className="input-wrapper">
                         <label htmlFor="password">Password</label>
@@ -64,12 +64,4 @@ function SignIn() {
         </main>
     );
 }
-
-/*
-<!-- PLACEHOLDER DUE TO STATIC SITE -->
-<a href="./user.html" className="sign-in-button">Sign In</a>
-<!-- SHOULD BE THE BUTTON BELOW -->
-<!-- <button class="sign-in-button">Sign In</button> -->
-<!--  -->
-*/
 export default SignIn
