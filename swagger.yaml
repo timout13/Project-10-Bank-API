@@ -139,14 +139,14 @@ paths:
           description: Unauthorized access for this role
         '500':
           description: Internal Server Error
-  /user/account/{idAccount}/transactions:
+  /user/account/{idAccount}/transactions/current-month:
     get:
       security:
         - Bearer: [ ]
       tags:
         - User Account management
-      summary: Account Transactions
-      description: API for fetching a user account transactions.
+      summary: Current month Account Transactions
+      description: API for fetching a user account current month transactions.
       parameters:
         - in: header
           name: Authorization
@@ -175,7 +175,80 @@ paths:
           description: An account with the specified ID was not found.
         '500':
           description: Internal Server Error
+  /user/account/{idAccount}/transactions:
+    post:
+      security:
+        - Bearer: [ ]
+      tags:
+        - User Account management
+      summary: Create an Account Transaction
+      description: API to create a user transaction
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - name: idAccount
+          in: path
+          description: Account ID
+          type: integer
+          required: true
+        - in: body
+          name: body
+          description: Create account transaction attributes
+          required: true
+          schema:
+            $ref: '#/definitions/AccountCreateTransaction'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Account transaction created successfully
+          schema:
+            $ref: '#/definitions/AccountUpdateTransactionsResponse'
+        '401':
+          description: The token is invalid.
+        '403':
+          description: Unauthorized access for this role
+        404:
+          description: An Account with the specified ID was not found.
+        '500':
+          description: Internal Server Error
   /user/transactions/{idTransaction}:
+    get:
+      security:
+        - Bearer: [ ]
+      tags:
+        - User Account management
+      summary: Detail of a Transaction
+      description: API to read a user transaction
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - name: idTransaction
+          in: path
+          description: Transaction ID
+          type: integer
+          required: true
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Account transaction retrieved successfully
+          schema:
+            $ref: '#/definitions/AccountUpdateTransactionsResponse'
+        '401':
+          description: The token is invalid.
+        '403':
+          description: Unauthorized access for this role
+        404:
+          description: A transaction with the specified ID was not found.
+        '500':
+          description: Internal Server Error
     patch:
       security:
         - Bearer: [ ]
@@ -213,6 +286,39 @@ paths:
           description: Unauthorized access for this role
         404:
           description: A transaction with the specified ID was not found.
+        '500':
+          description: Internal Server Error
+    delete:
+      security:
+        - Bearer: [ ]
+      tags:
+        - User Account management
+      summary: Delete an Account Transaction
+      description: API to delete a user transaction
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - name: idTransaction
+          in: path
+          description: Transaction ID
+          type: integer
+          required: true
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Account transaction removed successfully
+          schema:
+            $ref: '#/definitions/AccountDeleteTransactionResponse'
+        '401':
+          description: The token is invalid.
+        '403':
+          description: Unauthorized access for this role
+        404:
+          description: A Transaction with the specified ID was not found.
         '500':
           description: Internal Server Error
 securityDefinitions:
@@ -310,6 +416,8 @@ definitions:
   AccountUpdateTransactionsResponse:
     type: object
     properties:
+      idAccount:
+        type: integer
       idTransaction:
         type: integer
       category:
@@ -326,3 +434,50 @@ definitions:
         type: number
       description:
         type: string
+  AccountCreateTransaction:
+    properties:
+      category:
+        type: integer
+        description: The category type of the transaction
+      note:
+        type: string
+        description: The notes to link to the transaction
+      transactionType:
+        type: integer
+        description: The id of the transaction type
+      date:
+        type: string
+        description: The date of the transaction
+      amount:
+        type: number
+        description: The transaction's amount
+      balance:
+        type: number
+        description: The transaction's balance
+      description:
+        type: string
+        description: The transaction's description
+  AccountCreateTransactionResponse:
+    type: object
+    properties:
+      idAccount:
+        type: integer
+      idTransaction:
+        type: integer
+      category:
+        type: integer
+      transactionType:
+        type: integer
+      note:
+        type: string
+      date:
+        type: string
+      amount:
+        type: number
+      balance:
+        type: number
+      description:
+        type: string
+  AccountDeleteTransactionResponse:
+    type: string
+    example: "The transaction has been successfully deleted"
