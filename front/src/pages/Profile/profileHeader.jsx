@@ -23,8 +23,7 @@ function ProfileHeader() {
         };
         fetchProfile();
     }, [, dispatch]);
-    //console.log(loading);
-    //console.log(user);
+
     const handleUpdate = async (e) => {
         e.preventDefault();
         const newFirstname = firstnameRef.current.value;

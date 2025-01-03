@@ -1,6 +1,3 @@
-import icon_chat from "../../assets/img/icon-chat.png";
-import icon_money from "../../assets/img/icon-money.png";
-import icon_security from "../../assets/img/icon-security.png";
 import {useState} from "react";
 import { useDispatch } from 'react-redux';
 import { setRememberMe ,login } from '../../redux/slices/authSlice';

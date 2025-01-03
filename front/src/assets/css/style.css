@@ -42,6 +42,11 @@ body,#root {
     padding: 5px 20px;
 }
 
+.main-nav .wp  {
+    display: flex;
+    gap: 10px;
+}
+
 .main-nav a {
     font-weight: bold;
     color: #2c3e50;
@@ -228,6 +233,77 @@ button.main-nav-item{
     margin-left: 8px;
     font-size: 14px;
 }
+
+/* Erreur 404 */
+
+.error_404 {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+@media (max-width: 576px) {
+    .error_404 {
+        margin-block: 0px;
+        gap: 30px;
+    }
+}
+.error_404_title {
+    font-size: 188px;
+    font-weight: 800;
+    color: black;
+    text-align: center;
+    margin-bottom: 50px;
+}
+@media (max-width: 1023px) {
+    .error_404_title {
+        margin-block: 0px;
+    }
+}
+@media (max-width: 576px) {
+    .error_404_title {
+        font-size: 110px;
+        margin-bottom: 0px;
+    }
+}
+.error_404_subtitle {
+    font-size: 36px;
+    font-weight: 500;
+    color: black;
+    text-align: center;
+    padding-inline: 30px;
+}
+@media (max-width: 1023px) {
+    .error_404_subtitle {
+        font-size: 36px;
+    }
+}
+@media (max-width: 576px) {
+    .error_404_subtitle {
+        font-size: 12px;
+        padding-inline: 60px;
+    }
+}
+.error_404_link {
+    display: block;
+    font-size: 18px;
+    font-weight: 500;
+    color: black;
+    text-align: center;
+    text-decoration: underline;
+    margin-bottom: 50px;
+
+}
+@media (max-width: 1023px) {
+    .error_404_link {
+        font-size: 18px;
+    }
+}
+@media (max-width: 576px) {
+    .error_404_link {
+        font-size: 12px;
+    }
+}
+
 @media (min-width: 920px) {
     .hero {
         height: 400px;
@@ -465,5 +541,17 @@ button.main-nav-item{
 
     .transaction-button {
         width: 200px;
+    }
+}
+@media (max-width: 576px) {
+    .main-nav .wp  {
+        display: flex;
+        gap: 5px;
+        flex-direction: column;
+        align-items: start;
+    }
+    button.main-nav-item,.main-nav-item{
+        padding: 0;
+        font-size: 12px;
     }
 }

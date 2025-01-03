@@ -133,7 +133,7 @@ const authSlice = createSlice({
             })
             .addCase(fetchUserProfile.fulfilled, (state, action) => {
                 state.loading = false;
-                state.user = action.payload; // save user data in store
+                state.user = action.payload;
             })
             .addCase(fetchUserProfile.rejected, (state, action) => {
                 state.loading = false;

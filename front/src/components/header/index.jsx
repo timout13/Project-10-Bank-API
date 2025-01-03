@@ -18,7 +18,7 @@ function Header() {
             }
         };
         fetchProfile();
-    }, [, dispatch]);
+    }, [dispatch]);
     return (
         <>
             <nav className="main-nav">
@@ -30,21 +30,17 @@ function Header() {
                     />
                     <h1 className="sr-only">Argent Bank</h1>
                 </a>
-                <div>
+                <div className="wp">
                     {!user && <a className="main-nav-item" href="/login">
                         <i className="fa fa-user-circle"></i>
                         Sign In
                     </a>}
-                    {user && location !== '/profile' && <button className="main-nav-item" onClick={()=>dispatch(logout())}>
-                        <i className="fa fa-user-circle"></i>
-                        Sign out
-                    </button>}
-                    {user && location === '/profile' &&
+                    {user &&
                         <>
-                            <button className="main-nav-item">
+                            <a href={"/profile"} className="main-nav-item">
                                 <i className="fa fa-user-circle"></i>
                                 {user.firstName}
-                            </button>
+                            </a>
                             <button className="main-nav-item" onClick={() => dispatch(logout())}>
                                 <i className="fa fa-sign-out"></i>
                                 Sign out
